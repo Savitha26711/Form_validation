@@ -1,0 +1,262 @@
+**HTML**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="form.css">
+    <title>Document</title>
+</head>
+<body>
+    <form name="Form" onsubmit="return validateform()">
+        <h2>Registration Form</h2>
+        
+        <div class="box">
+            <label>Full Name</label>
+            <input type="text" name="name" id="name">
+            <div class="error" id="nameErr"></div>
+        </div>
+
+        <div class="box">
+            <label>Email Address</label>
+            <input type="text" name="email" id="email">
+            <div class="error" id="emailErr"></div>
+        </div>
+
+        <div class="box">
+            <label>Mobile number</label>
+            <input type="text" name="mobile" id="mobile" maxlength="10">
+            <div class="error" id="mobileErr"></div>
+        </div>
+
+        <div class="box">
+            <label>Country</label>
+            <select name="country" id="country">
+                <option value="Select">Select</option>
+                <option value="India">India</option>
+                <option value="London">London</option>
+            </select>
+            <div class="error" id="countryErr"></div>
+        </div>
+
+        <div class="box">
+            <label>Gender</label>
+            <label><input type="radio" name="gender" value="Male"> Male</label>
+            <label><input type="radio" name="gender" value="Female"> Female</label>
+            <div class="error" id="genderErr"></div>
+        </div>
+
+        <div class="box">
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+
+    <script src="form.js"></script>
+</body>
+</html>
+**
+
+
+**CSS**
+body{
+    font-size: 16px;
+    font-family: system-ui;
+    background:-moz-repeating-radial-gradient(top left, #90F6FB,#2c3283)
+    
+}
+.form{
+    width: 100%;
+}
+h2{
+    text-align: center;
+    color: #efbe58;
+}
+form{
+    width: 300px;
+    padding: 15px 40px 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    margin: 4% auto;
+}
+label{
+    display: block;
+    margin-bottom: 5px;
+}
+label i{
+    color: #999;
+    font-size: 80%;
+}
+input , select {
+    border: 1px soild #ccc;
+    padding: 10px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 2px;
+    background-color: #a9bae64a;
+}
+.box{
+    padding-bottom: 10px;
+}
+.form-inline{
+    border: 1px soild #ccc;
+    padding:8px 10px 4px;
+    border-radius: 2px;
+}
+.form-inlinelabel,.form-inline input{
+    display: inline-block;
+    width: auto;
+    padding-right: 15px;
+}
+.error{
+    color: red;
+    font-size: 90%;
+}
+input[type="text"]{
+    outline:none;
+}
+
+input[type="submit"]{
+    font-size: 110%;
+    font-weight: 200;
+    background-color: #efbe58;
+    border-color: #efbe58;
+    box-shadow: 0 3px 0 #bd432e;
+    color: white;
+    margin-top: 10px;
+    cursor: pointer;
+    }
+    input[type="submit"]:hover{
+        background: #bd432e;
+        border-color: #bd432e;
+    }
+
+    .input-1{
+        background-image: url(../images/check.png);
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        border:1px solid #01cc40;
+    }
+
+    .input-2{
+        background-image: url(../images/cancel.png);
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        border:1px solid red;
+    }
+
+    .input-3{
+        border:1px solid #01cc40;
+    }
+
+    .input-4{
+        border:1px solid red;
+    }
+ select{
+    outline: none!important;
+ }
+ **
+
+ **JS**
+ function printerror(Id, Msg) {
+    document.getElementById(Id).innerText = Msg;
+}
+
+function validateform() {
+    var name = document.forms["Form"]["name"].value;
+    var email = document.forms["Form"]["email"].value;
+    var mobile = document.forms["Form"]["mobile"].value;
+    var country = document.forms["Form"]["country"].value;
+    var gender = document.querySelector('input[name="gender"]:checked');
+
+    var nameErr = emailErr = mobileErr = countryErr = genderErr = true;
+
+    if (name == "") {
+        printerror("nameErr", "Please enter your name");
+    } else {
+        var regex = /^[a-zA-Z\s]+$/;
+        if (!regex.test(name)) {
+            printerror("nameErr", "Please enter a valid name");
+        } else {
+            printerror("nameErr", "");
+            nameErr = false;
+        }
+    }
+
+    if (email == "") {
+        printerror("emailErr", "Please enter your email address");
+    } else {
+        var regex = /^\S+@\S+\.\S+$/;
+        if (!regex.test(email)) {
+            printerror("emailErr", "Please enter a valid email address");
+        } else {
+            printerror("emailErr", "");
+            emailErr = false;
+        }
+    }
+
+    if (mobile == "") {
+        printerror("mobileErr", "Please enter your mobile number");
+    } else {
+        var regex = /^[1-9]\d{9}$/;
+        if (!regex.test(mobile)) {
+            printerror("mobileErr", "Please enter a valid 10-digit mobile number");
+        } else {
+            printerror("mobileErr", "");
+            mobileErr = false;
+        }
+    }
+
+    if (country == "Select") {
+        printerror("countryErr", "Please select your country");
+    } else {
+        printerror("countryErr", "");
+        countryErr = false;
+    }
+
+    if (!gender) {
+        printerror("genderErr", "Please select your gender");
+    } else {
+        printerror("genderErr", "");
+        genderErr = false;
+    }
+
+    return !(nameErr || emailErr || mobileErr || countryErr || genderErr);
+}
+**
+
+
+**ARITHMETIC OPERTION FOR CALCULATOR**
+**HTML**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="index.js">
+   
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let number = 100;
+       sum = number+50;
+       sub = number-20;
+        mul = number*2;
+        div = number/5;
+        sqrt = number**2;
+        
+       
+        console.log("sum is :",sum)
+        console.log("subtraction is :",sub)
+        console.log("multiplication is:",mul)
+        console.log("division is :",div)
+        console.log("squart root is :",sqrt)
+       
+    </script>
+</body>
+</html>
+**
+**JS**
+*index.js*
